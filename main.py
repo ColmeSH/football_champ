@@ -5,6 +5,10 @@ app = Flask(__name__)
 teams = []
 print teams
 
+def search_team(teamid):
+    for index, team in enumerate(teams):
+        if teamid ==
+
 
 def generate_id(teams):
     try:
@@ -39,12 +43,12 @@ def create():
         print 'sono in get'
         return render_template('createteam.html')
 
-@app.route('/details/team/<teamid>', methods = ['GET'])
+
+@app.route('/details/team/<teamid>', methods=['GET'])
 def details(teamid):
-    return render_template('teamdetails.html')
-
-
-
+    teamid=int(teamid)
+    print search_team(teamid)
+    return render_template('teamdetails.html', team=teams[teamid])
 
 
 
