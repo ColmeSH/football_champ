@@ -39,9 +39,11 @@
             </div>
             <div class="col-md-1 text-center">{{ team['points'] }}</div>
             <div class="col-md-3 col-md-offset-2">
-                <a class="btn btn-info" href="/details/team/{{ teams.id }}">Details</a>
+
+                <a class="btn btn-info" href="/details/team/{{ team['teamid'] }}">Details</a>
                 <a class="btn btn-warning" href="/update">Update</a>
                 <a class="btn btn-danger" href="/delete">Delete</a>
+
             </div>
         </div><br />
         {% endfor %}

@@ -3,18 +3,19 @@ from Classes.team import Team
 
 app = Flask(__name__)
 teams = []
-print teams
+# print teams
 
 def search_team(teamid):
     for index, team in enumerate(teams):
-        if teamid ==
+        if teamid == index:
+            return index
 
 
 def generate_id(teams):
     try:
         return teams[-1].teamid + 1
     except:
-        return 1
+        return 0
 
 
 @app.route('/')
@@ -25,12 +26,13 @@ def index():
 @app.route('/create', methods=['GET', 'POST'])
 def create():
     if request.method == 'POST':
-        print 'sono in post'
+        # print 'sono in post'
         # create team with name passed by post method
+        #check if string passed is empty and return a message or create a obj of class team
         if request.form['name'] != "":
             t = Team(request.form['name'])
             t.teamid = generate_id(teams)
-            print t.teamid
+            # print t.teamid
 
             teams.append(t)
             print teams
@@ -44,11 +46,17 @@ def create():
         return render_template('createteam.html')
 
 
-@app.route('/details/team/<teamid>', methods=['GET'])
+@app.route('/details/team/<teamid>')
 def details(teamid):
     teamid=int(teamid)
-    print search_team(teamid)
-    return render_template('teamdetails.html', team=teams[teamid])
+    i = search_team(teamid)
+    i = int(i)
+    print i
+    return render_template('teamdetails.html', team=teams[i])
+
+@app.route('')
+def remove():
+    pass
 
 
 
