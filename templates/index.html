@@ -17,16 +17,37 @@
 
         <h1 class="text-center">HOMEPAGE</h1>
         <div class="row">
-            <div class="col-md-1"></div>
-            <a class="col-md-3  btn btn-success" href="/create">Create team</a>
-            <div class="col-md-1"></div>
-            <a class="col-md-3 btn btn-warning" href="/udpate">Update your team info</a>
-            <div class="col-md-1"></div>
-            <a class="col-md-3 btn btn-danger" href="/remove">Delete Team</a>
+            <a class="col-md-6 col-md-offset-3 btn btn-success" href="/create">Create team</a>
+        </div>
+        <br /><br /><br /><br />
+
+
+        <div class="row">
+            <div class="col-md-4">
+                <h2>NAME</h2>
+            </div>
+            <div class="col-md-4">
+                <h2>POINTS</h2>
+            </div>
+            <div class="col-md-offset-4"></div>
         </div>
 
-        <p>Name of the partecipants:</p>
-        
+        {% for team in teams %}
+        <div class="row">
+            <div class="col-md-4">
+                <h5>{{ team['name'] }}</h5>
+            </div>
+            <div class="col-md-1 text-center">{{ team['points'] }}</div>
+            <div class="col-md-3 col-md-offset-2">
+                <a class="btn btn-info" href="/details">Details</a>
+                <a class="btn btn-warning" href="/update">Update</a>
+                <a class="btn btn-danger" href="/delete">Delete</a>
+            </div>
+        </div><br />
+        {% endfor %}
+
+
+
 
 
 

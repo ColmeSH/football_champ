@@ -3,16 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>createteam</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
 </head>
 <body>
-
-    <form action="/create" method="POST">
-        Team name:<br />
-        <input type="text" name="team" placeholder="Type name of your team">
-        <input type="submit" value="Submit">
-    </form>
+    <div class="container">
 
 
 
+        <!-- CREATE TEAM FORM-->
+        <h1>Create Team:</h1><br />
+        <p class="col-md-10 bg-warning">{{ msg }}</p>
+
+        <form action="/create" method="post">
+            <div class="form-group row">
+                <div class="col-md-10">
+                    <h3>Name:</h3>
+                    <input type="text" class="form-control" name="name" placeholder="Insert name"><br />
+                    <input class="btn btn-success" type="submit" value="Create">
+                </div>
+            </div>
+        </form>
+
+
+
+    </div>
 </body>
 </html>
