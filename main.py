@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect
 from Classes.team import Team
 from random import randint
+import json
 
 app = Flask(__name__)
 teams = []
@@ -38,6 +39,7 @@ def create():
             # print t.teamid
 
             teams.append(t)
+
             print teams
             return redirect('/')
         else:
@@ -86,7 +88,12 @@ def update(teamid):
         return render_template('update.html', team=teams[index])
 
 
-
+@app.route('/api/teams')
+def api():
+    #create an api with json.dumps of the list of object teams
+    for i in teams:
+        print i.__dict__
+    return 'ciao'
 
 
 if __name__ == '__main__':
