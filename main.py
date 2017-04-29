@@ -76,6 +76,11 @@ def update(teamid):
 
     if request.method == 'POST':
         print 'sono in post di update'
+        print teams[index].name
+        print request.form['name']
+        teams[index].name = request.form['name']
+        print teams[index].name
+        return render_template('index.html', teams=teams)
     else:
         print 'sono in get di update'
         return render_template('update.html', team=teams[index])
