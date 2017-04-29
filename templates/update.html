@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>update team</title>
+     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+
+    <script src="static/code.js"></script>
+</head>
+<body>
+    <div class="container">
+
+ <!-- CREATE TEAM FORM-->
+        <h1>Update Team:</h1><br />
+        <p class="col-md-6 col-md-offset-2 bg-danger text-center">{{ msg }}</p>
+
+        <form action="details/team/{{ team['teamid'] }}/update" method="post">
+            <div class="form-group row">
+                <div class="col-md-10">
+                    <h3>Edit name:</h3>
+                    <input type="text" class="form-control" name="name" value="{{ team['name'] }}"><br />
+                    <input class="btn btn-warning" type="submit" value="Update">
+                    <a class="btn btn-default" href="/">Homepage</a>
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+</body>
+</html>

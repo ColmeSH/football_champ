@@ -69,6 +69,17 @@ def delete(teamid):
         return redirect('/')
     return 'non sto rimuovendo'
 
+@app.route('/details/team/<teamid>/update', methods=['GET','POST'])
+def update(teamid):
+    teamid=int(teamid)
+    index=search_team(teamid)
+
+    if request.method == 'POST':
+        print 'sono in post di update'
+    else:
+        print 'sono in get di update'
+        return render_template('update.html', team=teams[index])
+
 
 
 
