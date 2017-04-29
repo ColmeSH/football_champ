@@ -38,11 +38,20 @@
                 <h5>{{ team['name'] }}</h5>
             </div>
             <div class="col-md-1 text-center">{{ team['points'] }}</div>
-            <div class="col-md-3 col-md-offset-2">
-
+            <div class="col-md-3 col-md-offset-1">
+                <div class="col-md-4">
                 <a class="btn btn-info" href="/details/team/{{ team['teamid'] }}">Details</a>
-                <a class="btn btn-warning" href="/update">Update</a>
-                <a class="btn btn-danger" href="/delete">Delete</a>
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-warning" href="/update">Update</a>
+                </div>
+
+                <!-- wrap form in div to display inline -->
+                <div class="col-md-4">
+                    <form action="/details/team/{{ team['teamid'] }}/delete" method="post">
+                        <input type="submit" class="btn btn-danger" value="Delete">
+                    </form>
+                </div>
 
             </div>
         </div><br />

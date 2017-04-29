@@ -1,21 +1,23 @@
 from flask import Flask, render_template, request, redirect
 from Classes.team import Team
+from random import randint
 
 app = Flask(__name__)
 teams = []
 # print teams
 
 def search_team(teamid):
+    teamid = int(teamid)
     for index, team in enumerate(teams):
-        if teamid == index:
+        if team.teamid == teamid:
             return index
 
 
-def generate_id(teams):
+def generate_id():
     try:
         return teams[-1].teamid + 1
-    except:
-        return 0
+    except IndexError:
+        return 1
 
 
 @app.route('/')
@@ -31,7 +33,8 @@ def create():
         #check if string passed is empty and return a message or create a obj of class team
         if request.form['name'] != "":
             t = Team(request.form['name'])
-            t.teamid = generate_id(teams)
+            t.points = randint(1,100)
+            t.teamid = generate_id()
             # print t.teamid
 
             teams.append(t)
@@ -49,14 +52,24 @@ def create():
 @app.route('/details/team/<teamid>')
 def details(teamid):
     teamid=int(teamid)
-    i = search_team(teamid)
-    i = int(i)
-    print i
-    return render_template('teamdetails.html', team=teams[i])
+    index = search_team(teamid)
+    print index
+    return render_template('teamdetails.html', team=teams[index])
 
-@app.route('')
-def remove():
-    pass
+@app.route('/details/team/<teamid>/delete', methods=['POST'])
+def delete(teamid):
+    # print teamid
+    teamid = int(teamid)
+    index = search_team(teamid)
+    # print 'wanna delete football team "{}"'.format(teams[index].name)
+    # print type(teamid), type(index)
+    if teams[index].teamid == teamid:
+        teams.remove(teams[index])
+        print 'rimosso ATTENZIONE ALLA RICERCA DEL BLOG!!!!!!!!!!!!!!!!!!!!'
+        return redirect('/')
+    return 'non sto rimuovendo'
+
+
 
 
 
