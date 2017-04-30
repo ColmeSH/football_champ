@@ -1,100 +1,80 @@
 from flask import Flask, render_template, request, redirect
-from Classes.team import Team
-from random import randint
-import json
+from Classes.team import Team, Tournament, TeamNotFound
 
 app = Flask(__name__)
-teams = []
-# print teams
-
-def search_team(teamid):
-    teamid = int(teamid)
-    for index, team in enumerate(teams):
-        if team.teamid == teamid:
-            return index
-
-
-def generate_id():
-    try:
-        return teams[-1].teamid + 1
-    except IndexError:
-        return 1
+tournament = None
 
 
 @app.route('/')
 def index():
-    return render_template('index.html', teams=teams)
+    return render_template('index.html', teams=tournament.teams)
 
 
 @app.route('/create', methods=['GET', 'POST'])
 def create():
     if request.method == 'POST':
-        # print 'sono in post'
-        # create team with name passed by post method
-        #check if string passed is empty and return a message or create a obj of class team
         if request.form['name'] != "":
-            t = Team(request.form['name'])
-            t.points = randint(1,100)
-            t.teamid = generate_id()
-            # print t.teamid
-
-            teams.append(t)
-
-            print teams
+            team = Team(request.form['name'])
+            tournament.add_team(team)
             return redirect('/')
         else:
             msg = "Please insert a football team name!"
             return render_template('createteam.html', msg=msg)
 
     else:
-        print 'sono in get'
         return render_template('createteam.html')
 
 
 @app.route('/details/team/<teamid>')
 def details(teamid):
-    teamid=int(teamid)
-    index = search_team(teamid)
-    print index
-    return render_template('teamdetails.html', team=teams[index])
+    try:
+        teamid = int(teamid)
+        index, team = tournament.get_team(teamid)
+        print index, team
+    except ValueError:
+        return redirect('/')
+    except TeamNotFound:
+        return redirect('/')
+    return render_template('teamdetails.html', team=team)
+
 
 @app.route('/details/team/<teamid>/delete', methods=['POST'])
 def delete(teamid):
-    # print teamid
-    teamid = int(teamid)
-    index = search_team(teamid)
-    # print 'wanna delete football team "{}"'.format(teams[index].name)
-    # print type(teamid), type(index)
-    if teams[index].teamid == teamid:
-        teams.remove(teams[index])
-        print 'rimosso ATTENZIONE ALLA RICERCA DEL BLOG!!!!!!!!!!!!!!!!!!!!'
+    try:
+        teamid=int(teamid)
+        index, team = tournament.get_team(teamid)
+    except ValueError:
         return redirect('/')
-    return 'non sto rimuovendo'
+    except TeamNotFound:
+        return redirect('/')
+    tournament.teams.remove(tournament.teams[index])
+    return redirect('/')
+
 
 @app.route('/details/team/<teamid>/update', methods=['GET','POST'])
 def update(teamid):
-    teamid=int(teamid)
-    index=search_team(teamid)
-
+    try:
+        teamid=int(teamid)
+        index, team = tournament.get_team(teamid)
+    except ValueError:
+        return redirect('/')
+    except TeamNotFound:
+        return redirect('/')
+    
     if request.method == 'POST':
-        print 'sono in post di update'
-        print teams[index].name
-        print request.form['name']
-        teams[index].name = request.form['name']
-        print teams[index].name
-        return render_template('index.html', teams=teams)
+        tournament.teams[index]['team'].name = request.form['name']
+        return redirect('/')
     else:
-        print 'sono in get di update'
-        return render_template('update.html', team=teams[index])
+        return render_template('update.html', team=team)
 
 
-@app.route('/api/teams')
-def api():
-    #create an api with json.dumps of the list of object teams
-    for i in teams:
-        print i.__dict__
-    return 'ciao'
+# @app.route('/api/teams')
+# def api():
+#     for i in tournament.teams:
+#         print i.__dict__
+#     return 'ciao'
 
 
 if __name__ == '__main__':
+    tournament = Tournament('AlexTest')
     app.run(debug=True)

@@ -11,9 +11,9 @@
 </head>
 <body>
     <div class="container">
-        <h2>NAME OF THE TEAM: {{ team.name }}</h2>
-        <h2>SCORES: {{ team.points }}</h2>
-        <h2>ID: {{ team.teamid }}</h2>
+        <h2>NAME OF THE TEAM: {{ team.team.name }}</h2>
+        <h2>SCORES: {{ team.team.points }}</h2>
+        <h2>ID: {{ team._id }}</h2>
 
         <a class="btn btn-default" href="/">Homepage</a>
 
